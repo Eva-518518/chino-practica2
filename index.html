@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉语练习站 — Chino para hispanohablantes</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surf:#FFF;--surf2:#F0EDE6;--bd:#E0DBD3;--bd2:#C5BFB5;
+  --tx:#18160F;--tx2:#6A6459;--tx3:#9C9487;
+  --red:#C0392B;--rbg:#FDF0EE;--rbd:#F0A89E;
+  --teal:#0A6B52;--tbg:#E5F4EE;--tbd:#6DBFA4;
+  --amb:#7A4A00;--abg:#FEF3DC;--abd:#EFC45A;
+  --pur:#3D32A8;--pbg:#EEEDFE;--pbd:#A8A0EE;
+  --cor:#8A3318;--cbg:#FAE9E4;--cbd:#F0B8A6;
+  --grn:#2E6010;--gbg:#E6F2DC;--gbd:#AACE80;
+  --r:10px;--rs:6px;
+  --sh:0 1px 4px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.05);
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.65}
+header{background:var(--surf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.hinner{max-width:1100px;margin:0 auto;padding:0 1.5rem;height:56px;display:flex;align-items:center;gap:1rem}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--tx);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700}
+.logo-name{font-size:15px;font-weight:600;color:var(--tx)}
+.logo-sub{font-size:12px;color:var(--tx3)}
+.hright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.hbadge{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--abg);border:1px solid var(--abd);color:var(--amb)}
+.hadmin{font-size:13px;padding:6px 14px;border-radius:var(--rs);border:1px solid var(--bd);color:var(--tx2);text-decoration:none;transition:all .15s}
+.hadmin:hover{background:var(--surf2)}
+
+/* TTS status bar */
+.tts-bar{background:var(--abg);border-bottom:1px solid var(--abd);padding:8px 1.5rem;font-size:13px;color:var(--amb);display:flex;align-items:center;gap:10px;display:none}
+.tts-bar.show{display:flex}
+.tts-bar button{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--abd);background:var(--surf);color:var(--amb);cursor:pointer;font-family:inherit}
+
+.lesson-bar{background:var(--surf);border-bottom:1px solid var(--bd)}
+.lbinner{max-width:1100px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;gap:.75rem;overflow-x:auto}
+.lbl{font-size:12px;color:var(--tx3);white-space:nowrap;font-weight:500}
+.lesson-chip{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--surf);cursor:pointer;white-space:nowrap;font-size:13px;color:var(--tx2);transition:all .15s;flex-shrink:0}
+.lesson-chip:hover{border-color:var(--bd2)}
+.lesson-chip.on{background:var(--tx);color:#fff;border-color:var(--tx)}
+.lesson-chip .num{font-size:10px;background:var(--surf2);color:var(--tx3);padding:1px 5px;border-radius:10px}
+.lesson-chip.on .num{background:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
+
+.page{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2rem;align-items:start}
+@media(max-width:700px){.page{grid-template-columns:1fr;padding:1rem}.sidenav{display:none}}
+
+.sidenav{position:sticky;top:76px;background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:.875rem;box-shadow:var(--sh)}
+.snlabel{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em;padding:8px 6px 4px}
+.snitem{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--rs);cursor:pointer;font-size:13px;color:var(--tx2);transition:all .15s;text-decoration:none;user-select:none}
+.snitem:hover{background:var(--surf2);color:var(--tx)}
+.snitem.on{background:var(--tx);color:#fff}
+.snitem .sni{font-size:15px;width:20px;text-align:center}
+.snprogress{margin-top:1rem;padding-top:.875rem;border-top:1px solid var(--bd)}
+.snprog-label{font-size:11px;color:var(--tx3);margin-bottom:6px}
+.prog-bar{height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .4s;width:0%}
+.prog-text{font-size:11px;color:var(--tx3);margin-top:4px}
+
+.content{}
+.panel{display:none}.panel.on{display:block}
+.section-title{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.section-sub{font-size:14px;color:var(--tx2);margin-bottom:1.5rem}
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--sh)}
+.card-label{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.tip{display:flex;gap:10px;padding:11px 14px;border-radius:var(--rs);margin-bottom:1rem;font-size:13px;line-height:1.6;border:1px solid}
+.tip.a{background:var(--abg);border-color:var(--abd);color:var(--amb)}
+.tip.t{background:var(--tbg);border-color:var(--tbd);color:var(--teal)}
+.tip.p{background:var(--pbg);border-color:var(--pbd);color:var(--pur)}
+.tip strong{font-weight:600;display:block;margin-bottom:2px}
+
+/* ── GRAMMAR ── */
+.grammar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
+.gram-card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1rem;box-shadow:var(--sh)}
+.gram-tag{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--pbg);color:var(--pur);border:1px solid var(--pbd);display:inline-block;margin-bottom:6px}
+.gram-title{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.gram-body{font-size:13px;color:var(--tx2);margin-bottom:8px;line-height:1.5}
+.gram-ex{font-size:13px;color:var(--tx);background:var(--surf2);padding:4px 8px;border-radius:var(--rs);margin-bottom:3px;border-left:3px solid var(--pbd)}
+
+/* ── DIALOGUE ── */
+.d-tabs{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.d-tab{font-size:13px;padding:5px 14px;border-radius:20px;border:1px solid var(--bd);cursor:pointer;background:var(--surf);color:var(--tx2);transition:all .15s;user-select:none}
+.d-tab.on{background:var(--tx);color:#fff;border-color:var(--tx)}
+.dialogue{display:flex;flex-direction:column;gap:16px}
+.dline{display:flex;gap:10px}
+.dav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;margin-top:2px}
+.avm{background:var(--pbg);color:var(--pur)}.avs{background:var(--tbg);color:var(--teal)}
+.dc{flex:1}
+.dw{font-size:11px;color:var(--tx3);margin-bottom:2px}
+.dpy{font-size:12px;color:var(--tx3);font-style:italic;margin-bottom:2px}
+.dzh{font-size:16px;color:var(--tx);font-weight:500;margin-bottom:3px}
+.des{font-size:13px;color:var(--cor);margin-bottom:6px}
+.da{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+
+/* ── BUTTONS ── */
+.bplay{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--pbd);color:var(--pur);background:var(--pbg);cursor:pointer;transition:all .15s;font-family:inherit;user-select:none}
+.bplay:hover{background:var(--pbd)}
+.bplay.loading{opacity:.6;cursor:wait}
+.bplay.playing{background:var(--pur);color:#fff;border-color:var(--pur)}
+.bplay:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── RECORDING UI ── */
+.rec-panel{background:var(--surf2);border:1px solid var(--bd);border-radius:var(--r);padding:1.25rem;margin-top:.75rem}
+.rec-status{font-size:13px;color:var(--tx3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:var(--bd2);flex-shrink:0;transition:background .3s}
+.rec-dot.active{background:var(--red);animation:pulse 1s infinite}
+.rec-dot.ready{background:var(--teal)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.waveform{height:48px;display:flex;align-items:center;gap:2px;margin-bottom:12px;background:var(--surf);border-radius:var(--rs);padding:8px 12px;border:1px solid var(--bd)}
+.wbar{width:3px;border-radius:2px;background:var(--bd2);transition:height .1s ease}
+.wbar.active{background:var(--red)}
+.wbar.done{background:var(--teal)}
+.rec-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.brec{display:inline-flex;align-items:center;gap:7px;font-size:14px;padding:9px 20px;border-radius:var(--rs);cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s;border:1px solid}
+.brec.idle{background:var(--rbg);border-color:var(--rbd);color:var(--red)}
+.brec.idle:hover{background:var(--red);color:#fff}
+.brec.recording{background:var(--red);color:#fff;border-color:var(--red);animation:pulse 1.2s infinite}
+.brec.processing{background:var(--surf2);border-color:var(--bd);color:var(--tx3);cursor:wait}
+.brec.done{background:var(--tbg);border-color:var(--tbd);color:var(--teal)}
+.transcript-box{background:var(--surf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;font-size:14px;color:var(--tx);margin-top:10px;min-height:40px;line-height:1.6;display:none}
+.transcript-label{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.ai-feedback{margin-top:10px;font-size:13px;padding:10px 14px;border-radius:var(--rs);line-height:1.7;white-space:pre-wrap;display:none;border:1px solid}
+.ai-feedback.great{background:var(--gbg);border-color:var(--gbd);color:var(--grn)}
+.ai-feedback.ok{background:var(--abg);border-color:var(--abd);color:var(--amb)}
+.ai-feedback.loading{background:var(--surf2);border-color:var(--bd);color:var(--tx3)}
+
+/* speak panel lines */
+.spline{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:10px;box-shadow:var(--sh)}
+.spzh{font-size:17px;font-weight:500;color:var(--tx);margin-bottom:3px}
+.sppy{font-size:12px;color:var(--tx3);font-style:italic;margin-bottom:3px}
+.spes{font-size:13px;color:var(--cor);margin-bottom:8px}
+
+/* ── ROLEPLAY ── */
+.scene{background:var(--abg);border:1px solid var(--abd);border-radius:var(--rs);padding:12px 16px;margin-bottom:1rem}
+.scet{font-size:14px;font-weight:600;color:var(--amb);margin-bottom:3px}
+.sced{font-size:13px;color:var(--amb);opacity:.85}
+.chat{background:var(--surf2);border-radius:var(--r);padding:1rem;min-height:240px;max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:.875rem;border:1px solid var(--bd)}
+.mw{display:flex;flex-direction:column}
+.mw.u{align-items:flex-end}.mw.a{align-items:flex-start}
+.mwho{font-size:11px;color:var(--tx3);margin-bottom:3px;padding:0 3px}
+.mb{max-width:82%;padding:9px 14px;border-radius:14px;font-size:14px;line-height:1.55}
+.mb.a{background:var(--surf);border:1px solid var(--bd);color:var(--tx);border-bottom-left-radius:3px}
+.mb.u{background:var(--tx);color:#fff;border-bottom-right-radius:3px}
+.msub{font-size:11px;color:var(--tx3);margin-top:4px;font-style:italic}
+.mcorr{margin-top:7px;padding:8px 11px;background:var(--rbg);border:1px solid var(--rbd);border-radius:var(--rs);font-size:12px;color:var(--red);line-height:1.6}
+.mcorr strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--tx3);animation:bounce .9s infinite}
+.tdot:nth-child(2){animation-delay:.15s}.tdot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.875rem}
+.pill{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid var(--bd);cursor:pointer;color:var(--tx2);background:var(--surf);transition:all .15s;user-select:none}
+.pill:hover{background:var(--pbg);border-color:var(--pbd);color:var(--pur)}
+.cinrow{display:flex;gap:8px;margin-bottom:6px}
+.cinput{flex:1;padding:9px 13px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--surf);font-size:14px;color:var(--tx);font-family:inherit;outline:none;transition:border-color .15s}
+.cinput:focus{border-color:var(--tx)}
+.csend{padding:9px 16px;border-radius:var(--rs);background:var(--tx);color:#fff;border:none;font-size:14px;cursor:pointer;font-family:inherit;font-weight:500}
+.csend:disabled{opacity:.4;cursor:not-allowed}
+.cmic{padding:9px 12px;border-radius:var(--rs);background:var(--rbg);border:1px solid var(--rbd);color:var(--red);font-size:18px;cursor:pointer;transition:all .15s;line-height:1}
+.cmic.on{background:var(--red);color:#fff;animation:pulse 1.2s infinite}
+
+/* ── DICTADO ── */
+.acl{display:flex;align-items:center;gap:12px;background:var(--surf2);border-radius:var(--rs);padding:11px 14px;border:1px solid var(--bd);margin-bottom:1rem}
+.apb{width:36px;height:36px;border-radius:50%;background:var(--tbg);border:1px solid var(--tbd);color:var(--teal);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;flex-shrink:0}
+.pbar{flex:1;height:4px;background:var(--bd);border-radius:2px;cursor:pointer}
+.pfill{height:100%;width:0%;background:var(--teal);border-radius:2px;transition:width .3s}
+.spdb{font-size:11px;font-weight:600;padding:4px 8px;border:1px solid var(--bd);border-radius:var(--rs);cursor:pointer;color:var(--tx2);background:var(--surf);font-family:inherit}
+.spdb.slow{background:var(--tbg);border-color:var(--tbd);color:var(--teal)}
+.fsen{font-size:16px;color:var(--tx);line-height:2.8;padding:1rem 1.25rem;background:var(--surf2);border-radius:var(--rs);margin-bottom:.75rem;border:1px solid var(--bd)}
+.blank{display:inline-block;border:none;border-bottom:2px solid var(--teal);background:transparent;font-size:16px;color:var(--tx);width:90px;text-align:center;outline:none;font-family:inherit;padding:0 3px}
+.blank.ok{border-color:var(--teal);color:var(--teal)}.blank.no{border-color:var(--red);color:var(--red)}
+.bcheck{padding:7px 16px;border-radius:var(--rs);background:var(--tbg);border:1px solid var(--tbd);color:var(--teal);font-size:14px;cursor:pointer;font-family:inherit;font-weight:500;margin-right:7px}
+.breset{padding:7px 16px;border-radius:var(--rs);border:1px solid var(--bd);color:var(--tx2);font-size:14px;cursor:pointer;font-family:inherit;background:var(--surf)}
+
+/* ── VOCAB ── */
+.sr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.st{background:var(--surf2);border-radius:var(--rs);padding:10px;text-align:center;border:1px solid var(--bd)}
+.sn{font-size:24px;font-weight:600;color:var(--tx)}.sl{font-size:11px;color:var(--tx3)}
+.pdots{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--bd2)}
+.pdot.k{background:var(--teal)}.pdot.cur{background:var(--red)}
+.fc{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:2rem 1rem;text-align:center;min-height:200px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-bottom:1rem;box-shadow:var(--sh);transition:box-shadow .2s}
+.fc:hover{box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.fcpos{font-size:11px;padding:2px 10px;border-radius:20px;margin-bottom:10px;background:var(--pbg);color:var(--pur);border:1px solid var(--pbd)}
+.fcch{font-size:52px;color:var(--tx);line-height:1;margin-bottom:8px}
+.fcpy{font-size:18px;color:var(--cor);margin-bottom:5px;font-style:italic}
+.fces{font-size:16px;color:var(--tx);font-weight:500;margin-bottom:5px}
+.fcnt{font-size:12px;color:var(--amb);background:var(--abg);border:1px solid var(--abd);padding:5px 10px;border-radius:var(--rs);margin-top:8px}
+.fch{font-size:12px;color:var(--tx3);margin-top:11px}
+.fcnav{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:8px}
+.fcarr{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:var(--surf);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--tx2);font-family:inherit;transition:all .15s}
+.fcarr:hover{background:var(--surf2)}
+.fcact{display:flex;gap:8px;justify-content:center}
+.fck{padding:8px 22px;border-radius:var(--rs);background:var(--tbg);border:1px solid var(--tbd);color:var(--teal);font-size:14px;cursor:pointer;font-weight:500;font-family:inherit}
+.fcr{padding:8px 22px;border-radius:var(--rs);background:var(--cbg);border:1px solid var(--cbd);color:var(--cor);font-size:14px;cursor:pointer;font-weight:500;font-family:inherit}
+
+/* ── MISC ── */
+.arow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.ab{font-size:13px;padding:7px 13px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--surf);color:var(--tx2);cursor:pointer;font-family:inherit;transition:all .15s}
+.ab:hover{background:var(--surf2);color:var(--tx)}
+.ab.p{background:var(--pbg);border-color:var(--pbd);color:var(--pur);font-weight:500}
+.ail{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tx3);padding:8px 0}
+.spinner{width:15px;height:15px;border:2px solid var(--bd);border-top-color:var(--tx);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1.25rem;margin-top:1rem;box-shadow:var(--sh)}
+.ai-card-title{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:10px}
+.ai-card-body{font-size:14px;color:var(--tx);line-height:1.8;white-space:pre-wrap}
+#loading-state{text-align:center;padding:4rem 2rem;color:var(--tx3)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hinner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">汉</div>
+      <div><div class="logo-name">汉语练习站</div><div class="logo-sub">Chino para hispanohablantes</div></div>
+    </a>
+    <div class="hright">
+      <span class="hbadge">🇲🇽 Español → 中文</span>
+      <a href="admin/index.html" class="hadmin">⚙ Profesor</a>
+    </div>
+  </div>
+</header>
+
+<!-- TTS init bar — shown until user clicks to unlock audio -->
+<div class="tts-bar" id="tts-bar">
+  🔊 Para escuchar el audio en chino, haz clic aquí primero:
+  <button onclick="unlockAudio()">Activar audio</button>
+</div>
+
+<div class="lesson-bar">
+  <div class="lbinner">
+    <span class="lbl">Lección:</span>
+    <div id="lesson-chips"></div>
+  </div>
+</div>
+
+<div id="loading-state">
+  <div class="spinner" style="margin:0 auto 1rem;width:24px;height:24px;border-width:3px"></div>
+  Cargando lecciones…
+</div>
+
+<div class="page" id="app" style="display:none">
+  <aside class="sidenav">
+    <div class="snlabel">Módulos</div>
+    <a class="snitem on" onclick="go('listen',this)"><span class="sni">🎧</span>Escuchar</a>
+    <a class="snitem" onclick="go('speak',this)"><span class="sni">🎙️</span>Pronunciación</a>
+    <a class="snitem" onclick="go('grammar',this)"><span class="sni">📖</span>Gramática</a>
+    <a class="snitem" onclick="go('rp',this)"><span class="sni">💬</span>Roleplay IA</a>
+    <a class="snitem" onclick="go('dict',this)"><span class="sni">✍️</span>Dictado</a>
+    <a class="snitem" onclick="go('vocab',this)"><span class="sni">🃏</span>Vocabulario</a>
+    <div class="snprogress">
+      <div class="snprog-label">Vocabulario</div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-text" id="prog-text">0 / 0 palabras</div>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <!-- LISTEN -->
+    <section class="panel on" id="panel-listen">
+      <div class="section-title">Escuchar diálogos 🎧</div>
+      <div class="section-sub">Presiona ▶ en cada línea para escuchar la pronunciación con voz china. Usa "🐢 Lento" para practicar los tonos.</div>
+      <div class="tip t"><span>💡</span><div><strong>Cómo usar</strong>Escucha cada línea → activa Lento para los tonos → luego ve a "Pronunciación" para grabar tu voz.</div></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap">
+        <div class="d-tabs" id="d-tabs" style="margin-bottom:0"></div>
+        <button class="spdb" id="spd-btn" onclick="togSpd()" style="margin-left:auto">🐢 Lento</button>
+      </div>
+      <div class="card"><div class="dialogue" id="dlg-render"></div></div>
+      <div class="arow">
+        <button class="ab" onclick="playFull()">▶ Reproducir diálogo completo</button>
+        <button class="ab" onclick="stopAll()">⏹ Detener</button>
+      </div>
+    </section>
+
+    <!-- SPEAK -->
+    <section class="panel" id="panel-speak">
+      <div class="section-title">Practicar pronunciación 🎙️</div>
+      <div class="section-sub">Escucha el modelo, luego graba tu voz. La IA evalúa tus tonos y pronunciación en español.</div>
+      <div class="tip a" id="pron-tip"></div>
+      <div id="speak-lines"></div>
+    </section>
+
+    <!-- GRAMMAR -->
+    <section class="panel" id="panel-grammar">
+      <div class="section-title">Gramática 📖</div>
+      <div class="section-sub">Puntos gramaticales clave de esta lección con ejemplos del diálogo.</div>
+      <div class="grammar-grid" id="gram-grid"></div>
+    </section>
+
+    <!-- ROLEPLAY -->
+    <section class="panel" id="panel-rp">
+      <div class="section-title">Roleplay con IA 💬</div>
+      <div class="section-sub">Escribe o habla en chino. La IA actúa como personaje y corrige tus errores. También responde en voz.</div>
+      <div class="scene" id="rp-scene"></div>
+      <div class="pills" id="rp-pills"></div>
+      <div class="chat" id="chat"></div>
+      <div class="cinrow">
+        <button class="cmic" id="rpmic" onclick="togRpMic()" title="Hablar en chino">🎙️</button>
+        <input class="cinput" id="cin" placeholder="Escribe en chino o pinyin…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendRp()}">
+        <button class="csend" id="csend" onclick="sendRp()">Enviar</button>
+      </div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:10px">🎙️ hablar en chino (Chrome) · también puedes escribir en caracteres o pinyin</div>
+      <div class="arow">
+        <button class="ab p" onclick="fullCorr()">🔍 Corrección completa</button>
+        <button class="ab" onclick="resetRp()">↺ Reiniciar</button>
+      </div>
+      <div id="corr-area"></div>
+    </section>
+
+    <!-- DICTADO -->
+    <section class="panel" id="panel-dict">
+      <div class="section-title">Dictado ✍️</div>
+      <div class="section-sub">Escucha y completa los espacios en blanco. La IA explica las respuestas.</div>
+      <div class="acl">
+        <button class="apb" id="apb" onclick="togAudio()">▶</button>
+        <div class="pbar" onclick="seekA(event)"><div class="pfill" id="pfill"></div></div>
+        <span style="font-size:12px;color:var(--tx3)" id="atime">0:00</span>
+        <button class="spdb" id="dspd" onclick="togDSpd()">× 1</button>
+      </div>
+      <div class="card">
+        <div class="card-label">Completa el diálogo</div>
+        <div class="fsen" id="dict-render"></div>
+        <button class="bcheck" onclick="chkAns()">Comprobar ✓</button>
+        <button class="breset" onclick="rstAns()">Reiniciar</button>
+        <div id="dfb" style="margin-top:10px;font-size:13px"></div>
+      </div>
+      <div class="arow"><button class="ab p" onclick="explainAns()">🤖 La IA explica las respuestas</button></div>
+      <div id="exp-area"></div>
+    </section>
+
+    <!-- VOCAB -->
+    <section class="panel" id="panel-vocab">
+      <div class="section-title">生词卡片 🃏</div>
+      <div class="section-sub">Palabras nuevas de la lección. Escucha la pronunciación y marca las que ya dominas.</div>
+      <div class="sr">
+        <div class="st"><div class="sn" style="color:var(--teal)" id="kc">0</div><div class="sl">Dominadas</div></div>
+        <div class="st"><div class="sn" id="rc">0</div><div class="sl">Restantes</div></div>
+        <div class="st"><div class="sn" style="color:var(--red)" id="rvc">0</div><div class="sl">Repasar</div></div>
+      </div>
+      <div class="pdots" id="dots"></div>
+      <div class="fc" onclick="flipC()">
+        <div id="fcf">
+          <div class="fcpos" id="fcp">—</div>
+          <div class="fcch" id="fcch">—</div>
+          <div class="fcpy" id="fcpy">—</div>
+          <button class="bplay" id="fcplay" onclick="event.stopPropagation();ttsSpeak(curLesson.vocab[fi].zh,this)" style="margin-top:8px">🔊 Escuchar</button>
+          <div class="fch">Toca la tarjeta para ver la traducción</div>
+        </div>
+        <div id="fcb" style="display:none">
+          <div class="fcpos" id="fcp2">—</div>
+          <div class="fcch" style="font-size:36px" id="fcch2">—</div>
+          <div class="fces" id="fces">—</div>
+          <div class="fcnt" id="fcnt">—</div>
+          <div class="fch" style="margin-top:11px">Toca para volver</div>
+        </div>
+      </div>
+      <div class="fcnav">
+        <button class="fcarr" onclick="prevC()">←</button>
+        <span style="font-size:13px;color:var(--tx2);min-width:48px;text-align:center" id="fcc">— / —</span>
+        <button class="fcarr" onclick="nextC()">→</button>
+      </div>
+      <div class="fcact">
+        <button class="fck" onclick="markC('k')">Lo sé ✓</button>
+        <button class="fcr" onclick="markC('r')">Repasar ↺</button>
+      </div>
+      <div class="arow" style="margin-top:1rem">
+        <button class="ab p" onclick="wordEx()">🤖 Más ejemplos de esta palabra</button>
+      </div>
+      <div id="wd-area"></div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// 1. TTS ENGINE — Web Speech API with fixes
+// ═══════════════════════════════════════════════════
+
+// Erhua (儿化音) normalization map
+// Browser TTS often mispronounces erhua words — we clean them
+const ERHUA_MAP = {
+  '一点儿':'一点', '哪儿':'哪里', '这儿':'这里', '那儿':'那里',
+  '哪儿':'哪里', '一块儿':'一块', '一起儿':'一起', '好玩儿':'好玩',
+  '玩儿':'玩', '边儿':'边', '味儿':'味', '劲儿':'劲', '空儿':'空',
+  '缝儿':'缝', '个儿':'个', '块儿':'块'
+};
+
+function normalizeErhua(text) {
+  let t = text;
+  for (const [k, v] of Object.entries(ERHUA_MAP)) {
+    t = t.replaceAll(k, v);
+  }
+  return t;
+}
+
+let ttsVoice = null;
+let audioCtx = null;
+let audioUnlocked = false;
+let currentAudio = null;
+let slowMode = false;
+
+// Show unlock bar until user interacts
+function showUnlockBar() {
+  document.getElementById('tts-bar').classList.add('show');
+}
+
+function unlockAudio() {
+  document.getElementById('tts-bar').classList.remove('show');
+  audioUnlocked = true;
+  // Warm up speech synthesis with a silent utterance
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance('');
+    u.volume = 0;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function initTTS() {
+  if (!('speechSynthesis' in window)) {
+    console.warn('speechSynthesis not supported');
+    return;
+  }
+  // Load voices — may be async on some browsers
+  function loadVoices() {
+    const voices = window.speechSynthesis.getVoices();
+    // Priority order for Chinese voices
+    const preferred = [
+      'Microsoft Xiaoxiao Online (Natural) - Chinese (Mainland)',
+      'Microsoft Yunyang Online (Natural) - Chinese (Mainland)',
+      'Microsoft Huihui - Chinese (Simplified, PRC)',
+      'Google 普通话（中国大陆）',
+      'Ting-Ting',
+    ];
+    for (const name of preferred) {
+      const v = voices.find(v => v.name === name);
+      if (v) { ttsVoice = v; break; }
+    }
+    if (!ttsVoice) {
+      // Fallback: any zh-CN voice
+      ttsVoice = voices.find(v => v.lang === 'zh-CN') ||
+                 voices.find(v => v.lang === 'zh_CN') ||
+                 voices.find(v => v.lang.startsWith('zh'));
+    }
+    console.log('TTS voice:', ttsVoice ? ttsVoice.name : 'none found');
+  }
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  showUnlockBar();
+}
+
+// Main speak function
+function ttsSpeak(text, btn, onEnd) {
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no soporta síntesis de voz. Usa Google Chrome.');
+    return;
+  }
+
+  // Stop any current speech
+  window.speechSynthesis.cancel();
+  resetPlayBtns();
+
+  const clean = normalizeErhua(text);
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'zh-CN';
+  utter.rate = slowMode ? 0.65 : 0.9;
+  utter.pitch = 1.0;
+  utter.volume = 1.0;
+  if (ttsVoice) utter.voice = ttsVoice;
+
+  if (btn) {
+    btn.classList.add('playing');
+    const origText = btn.textContent;
+    btn.textContent = '⏸ Reproduciendo…';
+    utter.onend = () => {
+      btn.classList.remove('playing');
+      btn.textContent = origText;
+      if (onEnd) onEnd();
+    };
+    utter.onerror = (e) => {
+      btn.classList.remove('playing');
+      btn.textContent = origText;
+      console.error('TTS error:', e);
+    };
+  } else {
+    if (onEnd) utter.onend = onEnd;
+  }
+
+  // Chrome bug workaround: speech stops after ~15s without this
+  const keepAlive = setInterval(() => {
+    if (!window.speechSynthesis.speaking) { clearInterval(keepAlive); return; }
+    window.speechSynthesis.pause();
+    window.speechSynthesis.resume();
+  }, 10000);
+  utter.onend = utter.onend ? utter.onend : () => {};
+  const origEnd = utter.onend;
+  utter.onend = () => { clearInterval(keepAlive); origEnd(); if (onEnd && !btn) onEnd(); };
+
+  window.speechSynthesis.speak(utter);
+  audioUnlocked = true;
+}
+
+function stopAll() {
+  window.speechSynthesis.cancel();
+  resetPlayBtns();
+  stopWaveAnim();
+}
+
+function resetPlayBtns() {
+  document.querySelectorAll('.bplay.playing').forEach(b => {
+    b.classList.remove('playing');
+    if (b.dataset.orig) b.textContent = b.dataset.orig;
+  });
+}
+
+function togSpd() {
+  slowMode = !slowMode;
+  const b = document.getElementById('spd-btn');
+  b.textContent = slowMode ? '🐇 Normal' : '🐢 Lento';
+  b.classList.toggle('slow', slowMode);
+}
+
+function playFull() {
+  stopAll();
+  const lines = curLesson.dialogues[curDlgIdx].lines;
+  let i = 0;
+  function next() {
+    if (i >= lines.length) return;
+    ttsSpeak(lines[i++].zh, null, () => setTimeout(next, 500));
+  }
+  next();
+}
+
+// ═══════════════════════════════════════════════════
+// 2. SPEECH RECOGNITION — rebuilt with clear UX
+// ═══════════════════════════════════════════════════
+
+let srSupported = false;
+let activeRecognition = null;
+let waveTimer = null;
+let waveHeights = [];
+
+function initSR() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  srSupported = !!SR;
+}
+
+// Animate waveform bars
+function startWaveAnim(containerId) {
+  const bars = document.querySelectorAll('#' + containerId + ' .wbar');
+  if (!bars.length) return;
+  bars.forEach(b => b.classList.add('active'));
+  function animate() {
+    bars.forEach(b => {
+      const h = 4 + Math.random() * 28;
+      b.style.height = h + 'px';
+    });
+    waveTimer = setTimeout(animate, 100);
+  }
+  animate();
+}
+
+function stopWaveAnim() {
+  clearTimeout(waveTimer);
+  document.querySelectorAll('.wbar').forEach(b => {
+    b.classList.remove('active');
+    b.style.height = '4px';
+  });
+}
+
+function setWaveDone(containerId) {
+  clearTimeout(waveTimer);
+  const bars = document.querySelectorAll('#' + containerId + ' .wbar');
+  bars.forEach(b => { b.classList.remove('active'); b.classList.add('done'); b.style.height = '8px'; });
+}
+
+// Build waveform HTML
+function waveHTML(id) {
+  const bars = Array.from({length:20}, () => `<div class="wbar" style="height:4px"></div>`).join('');
+  return `<div class="waveform" id="${id}">${bars}</div>`;
+}
+
+// Record a single line and get AI feedback
+async function recordLine(lineIdx, zh, py, btnId, panelId) {
+  if (!srSupported) {
+    document.getElementById(panelId + '-feed').style.display = 'block';
+    document.getElementById(panelId + '-feed').className = 'ai-feedback ok';
+    document.getElementById(panelId + '-feed').textContent = '⚠️ El reconocimiento de voz requiere Google Chrome. Descarga Chrome e intenta de nuevo.';
+    return;
+  }
+
+  const btn = document.getElementById(btnId);
+  const trans = document.getElementById(panelId + '-trans');
+  const feed = document.getElementById(panelId + '-feed');
+  const waveId = panelId + '-wave';
+  const dotId = panelId + '-dot';
+  const statusId = panelId + '-status';
+
+  // Stop any active recognition
+  if (activeRecognition) { try { activeRecognition.stop(); } catch(e) {} }
+
+  // Update UI → recording
+  btn.className = 'brec recording';
+  btn.textContent = '⏺ Escuchando… (habla ahora)';
+  document.getElementById(dotId).className = 'rec-dot active';
+  document.getElementById(statusId).textContent = 'Escuchando… habla en chino';
+  trans.style.display = 'none';
+  feed.style.display = 'none';
+  startWaveAnim(waveId);
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const r = new SR();
+  r.lang = 'zh-CN';
+  r.continuous = false;
+  r.interimResults = false;
+  r.maxAlternatives = 1;
+  activeRecognition = r;
+
+  return new Promise((resolve) => {
+    r.onresult = async (e) => {
+      const heard = e.results[0][0].transcript;
+      activeRecognition = null;
+      stopWaveAnim();
+      setWaveDone(waveId);
+
+      btn.className = 'brec processing';
+      btn.textContent = '⏳ Analizando…';
+      document.getElementById(dotId).className = 'rec-dot';
+      document.getElementById(statusId).textContent = 'Analizando pronunciación…';
+
+      trans.style.display = 'block';
+      trans.innerHTML = `<div class="transcript-label">Lo que escuché</div>
+        <div style="font-size:16px;color:var(--tx)">「${heard}」</div>
+        <div style="font-size:12px;color:var(--tx3);margin-top:3px">Frase objetivo: 「${zh}」</div>`;
+
+      feed.style.display = 'block';
+      feed.className = 'ai-feedback loading';
+      feed.textContent = '⏳ La IA evalúa tu pronunciación…';
+
+      try {
+        const reply = await claude([{role:'user', content:
+          `Soy hispanohablante mexicano estudiando chino mandarín, nivel HSK 2.\n` +
+          `Frase objetivo: 「${zh}」 (${py})\n` +
+          `El reconocimiento de voz captó: 「${heard}」\n\n` +
+          `Evalúa mi pronunciación en español, de forma breve y motivadora (máx 120 palabras):\n` +
+          `1. Puntuación del 1 al 10\n` +
+          `2. ¿Coincidió con la frase objetivo? ¿Qué diferencias hay?\n` +
+          `3. Qué mejorar específicamente (tonos, iniciales, finales)\n` +
+          `4. Un ejercicio práctico de 1 línea`
+        }], 'Eres un profesor experto en chino mandarín para hispanohablantes mexicanos. Das retroalimentación breve, precisa y alentadora.');
+
+        const score = parseInt(reply.match(/\b([1-9]|10)\b/)?.[0] || '6');
+        feed.className = 'ai-feedback ' + (score >= 8 ? 'great' : 'ok');
+        feed.textContent = reply;
+
+        btn.className = 'brec done';
+        btn.textContent = '✓ Grabado — grabar de nuevo';
+        document.getElementById(dotId).className = 'rec-dot ready';
+        document.getElementById(statusId).textContent = 'Listo';
+      } catch(err) {
+        feed.className = 'ai-feedback ok';
+        feed.textContent = '⚠️ Error al conectar con la IA. Revisa tu conexión e intenta de nuevo.';
+        btn.className = 'brec idle';
+        btn.textContent = '🎙️ Grabar mi voz';
+      }
+      resolve();
+    };
+
+    r.onerror = (e) => {
+      activeRecognition = null;
+      stopWaveAnim();
+      btn.className = 'brec idle';
+      btn.textContent = '🎙️ Grabar mi voz';
+      document.getElementById(dotId).className = 'rec-dot';
+      document.getElementById(statusId).textContent = 'Error';
+
+      const msgs = {
+        'no-speech': 'No se detectó voz. Habla más cerca del micrófono e intenta de nuevo.',
+        'not-allowed': '❌ Micrófono bloqueado. Ve a Configuración del navegador → Privacidad → Micrófono → Permitir para este sitio.',
+        'network': '⚠️ Error de red. Verifica tu conexión.',
+        'aborted': 'Grabación cancelada.',
+      };
+      feed.style.display = 'block';
+      feed.className = 'ai-feedback ok';
+      feed.textContent = msgs[e.error] || ('Error: ' + e.error + '. Usa Google Chrome e intenta de nuevo.');
+      resolve();
+    };
+
+    r.onend = () => {
+      if (activeRecognition === r) {
+        // No result received — likely no-speech
+        activeRecognition = null;
+        stopWaveAnim();
+        btn.className = 'brec idle';
+        btn.textContent = '🎙️ Grabar mi voz';
+        document.getElementById(dotId).className = 'rec-dot';
+      }
+    };
+
+    try { r.start(); }
+    catch(e) {
+      feed.style.display = 'block';
+      feed.className = 'ai-feedback ok';
+      feed.textContent = 'No se pudo acceder al micrófono: ' + e.message;
+      btn.className = 'brec idle';
+      btn.textContent = '🎙️ Grabar mi voz';
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// 3. CLAUDE API
+// ═══════════════════════════════════════════════════
+async function claude(msgs, sys, tok=800) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6', max_tokens:tok, system:sys, messages:msgs})
+  });
+  if (!r.ok) throw new Error('API ' + r.status);
+  const d = await r.json();
+  return d.content.map(b=>b.text||'').join('');
+}
+
+// ═══════════════════════════════════════════════════
+// 4. DATA + LESSON LOADING
+// ═══════════════════════════════════════════════════
+let lessons=[], curLesson=null, curDlgIdx=0;
+
+async function loadLessons() {
+  try {
+    const r = await fetch('data/lessons.json');
+    lessons = await r.json();
+    initApp();
+  } catch(e) {
+    document.getElementById('loading-state').innerHTML =
+      '⚠️ No se pudo cargar lessons.json. <a href="admin/index.html">Ir al panel del profesor →</a>';
+  }
+}
+
+function initApp() {
+  document.getElementById('loading-state').style.display='none';
+  document.getElementById('app').style.display='grid';
+  initTTS(); initSR();
+  renderChips();
+  selectLesson(lessons[0]);
+}
+
+function renderChips() {
+  document.getElementById('lesson-chips').innerHTML = lessons.map((l,i) =>
+    `<div class="lesson-chip ${i===0?'on':''}" onclick="selectLesson(lessons[${i}],this)">
+      <span class="num">${l.number}</span> ${l.title} — ${l.subtitle||''}
+    </div>`).join('');
+}
+
+function selectLesson(l, chip) {
+  curLesson=l; curDlgIdx=0;
+  kn.clear(); rv.clear(); fi=0; ff=false; hist=[];
+  document.querySelectorAll('.lesson-chip').forEach(c=>c.classList.remove('on'));
+  if(chip) chip.classList.add('on');
+  else document.querySelector('.lesson-chip')?.classList.add('on');
+  renderAll();
+  go('listen', document.querySelector('.snitem'));
+}
+
+// ═══════════════════════════════════════════════════
+// 5. RENDER PANELS
+// ═══════════════════════════════════════════════════
+function renderAll() {
+  renderDTabs(); renderDialogue(0);
+  renderGrammar(); renderSpeak();
+  renderRpPanel(); renderDict(); renderCard();
+}
+
+function renderDTabs() {
+  document.getElementById('d-tabs').innerHTML = curLesson.dialogues.map((d,i)=>
+    `<div class="d-tab ${i===0?'on':''}" onclick="swDlg(${i},this)">${d.title} — ${d.titleEs}</div>`).join('');
+}
+
+function renderDialogue(idx) {
+  curDlgIdx=idx;
+  document.getElementById('dlg-render').innerHTML = curLesson.dialogues[idx].lines.map(l=>`
+    <div class="dline">
+      <div class="dav ${l.role==='student'?'avm':'avs'}">${l.who[0]}</div>
+      <div class="dc">
+        <div class="dw">${l.who}</div>
+        <div class="dpy">${l.py}</div>
+        <div class="dzh">${l.zh}</div>
+        <div class="des">${l.es}</div>
+        <div class="da">
+          <button class="bplay" onclick="ttsSpeak(${JSON.stringify(l.zh)},this)">▶ Escuchar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function swDlg(n,el) {
+  renderDialogue(n);
+  document.querySelectorAll('#d-tabs .d-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function renderGrammar() {
+  document.getElementById('gram-grid').innerHTML = curLesson.grammar.map(g=>`
+    <div class="gram-card">
+      <div class="gram-tag">${g.title}</div>
+      <div class="gram-title">${g.titleEs}</div>
+      <div class="gram-body">${g.body}</div>
+      ${g.examples.map(e=>`<div class="gram-ex">${e}</div>`).join('')}
+    </div>`).join('');
+}
+
+function renderSpeak() {
+  const tip = document.getElementById('pron-tip');
+  tip.className='tip a';
+  tip.innerHTML=`<span>⚠️</span><div><strong>Dificultades de esta lección para hispanohablantes</strong>${curLesson.pronunciationTips}</div>`;
+
+  const all = curLesson.dialogues.flatMap(d=>d.lines);
+  document.getElementById('speak-lines').innerHTML = all.map((l,i)=>{
+    const pid='sp'+i;
+    return `
+    <div class="spline">
+      <div class="dw">${l.who}</div>
+      <div class="spzh">${l.zh}</div>
+      <div class="sppy">${l.py}</div>
+      <div class="spes">${l.es}</div>
+      <div class="da" style="margin-bottom:10px">
+        <button class="bplay" onclick="ttsSpeak(${JSON.stringify(l.zh)},this)">▶ Escuchar modelo</button>
+      </div>
+      <div class="rec-panel">
+        <div class="rec-status">
+          <div class="rec-dot" id="${pid}-dot"></div>
+          <span id="${pid}-status">Listo para grabar</span>
+        </div>
+        ${waveHTML(pid+'-wave')}
+        <div class="rec-controls">
+          <button class="brec idle" id="${pid}-btn"
+            onclick="recordLine(${i},${JSON.stringify(l.zh)},${JSON.stringify(l.py)},'${pid}-btn','${pid}')">
+            🎙️ Grabar mi voz
+          </button>
+          <span style="font-size:12px;color:var(--tx3)">Habla en chino después de presionar</span>
+        </div>
+        <div class="transcript-box" id="${pid}-trans"></div>
+        <div class="ai-feedback" id="${pid}-feed"></div>
+      </div>
+    </div>`}).join('');
+}
+
+// ═══════════════════════════════════════════════════
+// 6. ROLEPLAY
+// ═══════════════════════════════════════════════════
+let hist=[], rpLoading=false, rpMicOn=false;
+
+function getRpSys() {
+  return `Eres un personaje de la lección "${curLesson.title}". El estudiante es hispanohablante mexicano, HSK 2.
+CONTEXTO: ${curLesson.roleplayContext}
+REGLAS:
+1. Responde SOLO en chino + pinyin entre paréntesis.
+2. Agrega: [ES: traducción al español mexicano]
+3. Si hay error gramatical: 🔴 CORRECCIÓN: [explicación en español] → Correcto: [frase correcta en chino]
+4. Respuestas cortas y naturales.`;
+}
+
+function renderRpPanel() {
+  document.getElementById('rp-scene').innerHTML =
+    `<div class="scet">📍 Situación</div><div class="sced">${curLesson.roleplayContext}</div>`;
+  const lines = curLesson.dialogues[0].lines.filter(l=>l.role==='student').slice(0,5);
+  document.getElementById('rp-pills').innerHTML = lines.map(l=>
+    `<div class="pill" onclick="usep(${JSON.stringify(l.zh)})">${l.zh}</div>`).join('');
+  resetRp();
+}
+
+async function sendRp(ov) {
+  const inp=document.getElementById('cin');
+  const txt=ov||inp.value.trim();
+  if(!txt||rpLoading) return;
+  inp.value='';
+  addMsg('u',txt); hist.push({role:'user',content:txt});
+  rpLoading=true; document.getElementById('csend').disabled=true;
+  const ty=addTyping();
+  try {
+    const rep=await claude(hist,getRpSys());
+    ty.remove();
+    const corr=rep.match(/🔴 CORRECCIÓN:[\s\S]+/);
+    const main=rep.replace(/🔴 CORRECCIÓN:[\s\S]+/,'').trim();
+    hist.push({role:'assistant',content:rep});
+    addMsg('a',main,corr?corr[0]:null);
+    // Speak AI Chinese reply
+    const zhOnly=main.split('\n')[0].replace(/\(.*?\)/g,'').replace(/\[ES:.*?\]/g,'').trim();
+    if(zhOnly) setTimeout(()=>ttsSpeak(zhOnly,null), 200);
+  } catch(e) { ty.remove(); addMsg('a','⚠️ Error de conexión.'); }
+  rpLoading=false; document.getElementById('csend').disabled=false;
+}
+
+function addMsg(role,txt,corr) {
+  const ch=document.getElementById('chat');
+  const w=document.createElement('div'); w.className='mw '+role;
+  const who=document.createElement('div'); who.className='mwho';
+  who.textContent=role==='a'?'🏪 Personaje':'👤 Tú';
+  const b=document.createElement('div'); b.className='mb '+role;
+  if(role==='a'){
+    b.innerHTML=txt.replace(/\[ES:\s*(.*?)\]/g,'<div class="msub">🇲🇽 $1</div>').replace(/\n/g,'<br>');
+  } else { b.textContent=txt; }
+  w.appendChild(who); w.appendChild(b);
+  if(corr){
+    const cd=document.createElement('div'); cd.className='mcorr';
+    cd.innerHTML='<strong>🔴 Corrección</strong>'+corr.replace('🔴 CORRECCIÓN:','').trim();
+    w.appendChild(cd);
+  }
+  ch.appendChild(w); ch.scrollTop=ch.scrollHeight; return w;
+}
+
+function addTyping() {
+  const ch=document.getElementById('chat');
+  const w=document.createElement('div'); w.className='mw a';
+  w.innerHTML=`<div class="mwho">🏪 Personaje</div>
+    <div class="mb a"><div style="display:flex;gap:4px;padding:4px 0">
+      <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+    </div></div>`;
+  ch.appendChild(w); ch.scrollTop=ch.scrollHeight; return w;
+}
+
+function usep(t){document.getElementById('cin').value=t;document.getElementById('cin').focus();}
+
+async function togRpMic() {
+  if(!srSupported){alert('Usa Google Chrome para hablar.');return;}
+  if(rpMicOn)return;
+  rpMicOn=true;
+  const btn=document.getElementById('rpmic');
+  btn.classList.add('on'); btn.textContent='⏺';
+
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const r=new SR(); r.lang='zh-CN'; r.continuous=false; r.interimResults=false;
+  r.onresult=e=>{const h=e.results[0][0].transcript;btn.classList.remove('on');btn.textContent='🎙️';rpMicOn=false;if(h)sendRp(h);};
+  r.onerror=()=>{btn.classList.remove('on');btn.textContent='🎙️';rpMicOn=false;};
+  r.onend=()=>{btn.classList.remove('on');btn.textContent='🎙️';rpMicOn=false;};
+  try{r.start();}catch(e){btn.classList.remove('on');btn.textContent='🎙️';rpMicOn=false;}
+}
+
+async function fullCorr() {
+  if(hist.length<2){alert('Practica la conversación primero.');return;}
+  const a=document.getElementById('corr-area');
+  a.innerHTML='<div class="ail"><div class="spinner"></div> Analizando…</div>';
+  const um=hist.filter(m=>m.role==='user').map(m=>'- '+m.content).join('\n');
+  try {
+    const r=await claude([{role:'user',content:
+      `Analiza los mensajes del estudiante:\n${um}\n\n` +
+      `Corrección en español:\n📊 RESUMEN:\n✅ LO CORRECTO:\n🔴 ERRORES (numerados): error → corrección → explicación\n` +
+      `💡 CONSEJO gramatical de la lección "${curLesson.title}"`}],
+      'Eres profesor de chino para hispanohablantes mexicanos.',700);
+    a.innerHTML=`<div class="ai-card"><div class="ai-card-title">📝 Corrección completa</div><div class="ai-card-body">${r}</div></div>`;
+  } catch(e){a.innerHTML='<div class="tip a" style="margin-top:12px"><span>⚠️</span><div>Error al conectar.</div></div>';}
+}
+
+function resetRp() {
+  hist=[]; document.getElementById('chat').innerHTML=''; document.getElementById('corr-area').innerHTML='';
+  const shopLine=curLesson.dialogues[0].lines.find(l=>l.role==='shop');
+  if(!shopLine)return;
+  setTimeout(()=>{
+    const g=shopLine.zh+'\n('+shopLine.py+')\n[ES: '+shopLine.es+']';
+    addMsg('a',g); hist.push({role:'assistant',content:g});
+    setTimeout(()=>ttsSpeak(shopLine.zh,null),300);
+  },80);
+}
+
+// ═══════════════════════════════════════════════════
+// 7. DICTADO
+// ═══════════════════════════════════════════════════
+let dplay=false,dprog=0,dtm=null,dslow=false;
+function togAudio(){dplay=!dplay;document.getElementById('apb').textContent=dplay?'⏸':'▶';if(dplay)animD();else clearTimeout(dtm);}
+function animD(){dprog=Math.min(dprog+(dslow?1:2),100);document.getElementById('pfill').style.width=dprog+'%';const s=Math.round(dprog*0.28);document.getElementById('atime').textContent='0:'+String(s).padStart(2,'0');if(dprog<100)dtm=setTimeout(animD,200);else{dplay=false;document.getElementById('apb').textContent='▶';}}
+function seekA(e){dprog=(e.offsetX/e.currentTarget.offsetWidth)*100;document.getElementById('pfill').style.width=dprog+'%';}
+function togDSpd(){dslow=!dslow;const b=document.getElementById('dspd');b.textContent=dslow?'× ½':'× 1';b.classList.toggle('slow',dslow);}
+
+function renderDict() {
+  const blanks=curLesson.dictado.blanks;
+  let html='';
+  blanks.forEach((b,i)=>{
+    if(b.before) html+=b.before+' ';
+    html+=`<input class="blank" id="b${i}" placeholder="___" maxlength="10"> `;
+    if(b.after) html+=b.after+(i<blanks.length-1?'<br>':'');
+  });
+  document.getElementById('dict-render').innerHTML=html;
+}
+
+function chkAns(){
+  const blanks=curLesson.dictado.blanks; let ok=0;
+  blanks.forEach((b,i)=>{const el=document.getElementById('b'+i);if(!el)return;el.classList.remove('ok','no');if(el.value.trim()===b.answer){el.classList.add('ok');ok++;}else if(el.value.trim())el.classList.add('no');});
+  const fb=document.getElementById('dfb');fb.textContent=ok===blanks.length?'✓ ¡Perfecto! 太好了！':ok+'/'+blanks.length+' — ¡sigue intentando!';fb.style.color=ok===blanks.length?'var(--teal)':'var(--red)';
+}
+function rstAns(){curLesson.dictado.blanks.forEach((_,i)=>{const el=document.getElementById('b'+i);if(el){el.value='';el.classList.remove('ok','no');}});document.getElementById('dfb').textContent='';}
+
+async function explainAns(){
+  const a=document.getElementById('exp-area');
+  a.innerHTML='<div class="ail"><div class="spinner"></div> Generando…</div>';
+  const list=curLesson.dictado.blanks.map((b,i)=>`${i+1}. [${b.answer}]: ${b.before||''}___${b.after||''}`).join('\n');
+  try{
+    const r=await claude([{role:'user',content:`Explica en español estas respuestas del dictado de "${curLesson.title}":\n${list}\nPara cada una: por qué es correcta y qué estructura gramatical usa. Máx 220 palabras.`}],'Eres profesor de chino para hispanohablantes mexicanos.',450);
+    a.innerHTML=`<div class="ai-card" style="margin-top:12px"><div class="ai-card-title">🤖 Explicación</div><div class="ai-card-body">${r}</div></div>`;
+  }catch(e){a.innerHTML='<div class="tip a" style="margin-top:12px"><span>⚠️</span><div>Error.</div></div>';}
+}
+
+// ═══════════════════════════════════════════════════
+// 8. FLASHCARDS
+// ═══════════════════════════════════════════════════
+let fi=0,ff=false;
+const kn=new Set(),rv=new Set();
+
+function renderCard(){
+  const v=curLesson.vocab;
+  updateCard();
+}
+function updateCard(){
+  const v=curLesson.vocab,c=v[fi];
+  ['fcp','fcp2'].forEach(id=>document.getElementById(id).textContent=c.pos);
+  ['fcch','fcch2'].forEach(id=>document.getElementById(id).textContent=c.zh);
+  document.getElementById('fcpy').textContent=c.py;
+  document.getElementById('fces').textContent=c.es;
+  document.getElementById('fcnt').textContent='⚠ '+c.note;
+  document.getElementById('fcc').textContent=(fi+1)+' / '+v.length;
+  ff=false;
+  document.getElementById('fcf').style.display='';
+  document.getElementById('fcb').style.display='none';
+  buildDots(); updateProgress();
+}
+function buildDots(){
+  const v=curLesson.vocab;
+  document.getElementById('dots').innerHTML=v.map((_,i)=>`<div class="pdot ${kn.has(i)?'k':''} ${i===fi?'cur':''}"></div>`).join('');
+  document.getElementById('kc').textContent=kn.size;
+  document.getElementById('rc').textContent=v.length-kn.size;
+  document.getElementById('rvc').textContent=rv.size;
+}
+function updateProgress(){
+  const v=curLesson.vocab,pct=v.length?Math.round(kn.size/v.length*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-text').textContent=kn.size+' / '+v.length+' palabras';
+}
+function flipC(){ff=!ff;document.getElementById('fcf').style.display=ff?'none':'';document.getElementById('fcb').style.display=ff?'':'none';}
+function prevC(){fi=(fi-1+curLesson.vocab.length)%curLesson.vocab.length;updateCard();}
+function nextC(){fi=(fi+1)%curLesson.vocab.length;updateCard();}
+function markC(t){if(t==='k'){kn.add(fi);rv.delete(fi);}else rv.add(fi);nextC();}
+
+async function wordEx(){
+  const c=curLesson.vocab[fi],a=document.getElementById('wd-area');
+  a.innerHTML='<div class="ail" style="margin-top:12px"><div class="spinner"></div> Generando…</div>';
+  try{
+    const r=await claude([{role:'user',content:`3 ejemplos de "${c.zh}" (${c.py}) para hispanohablante mexicano, lección "${curLesson.title}". Para cada uno: chino, pinyin, español. Máx 160 palabras.`}],'Eres profesor de chino para hispanohablantes.',360);
+    a.innerHTML=`<div class="ai-card" style="margin-top:12px"><div class="ai-card-title">🤖 Ejemplos de "${c.zh}"</div><div class="ai-card-body">${r}</div></div>`;
+  }catch(e){a.innerHTML='<div class="tip a" style="margin-top:12px"><span>⚠️</span><div>Error.</div></div>';}
+}
+
+// ═══════════════════════════════════════════════════
+// 9. NAVIGATION
+// ═══════════════════════════════════════════════════
+function go(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.snitem').forEach(n=>n.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');
+  if(el) el.classList.add('on');
+  stopAll();
+}
+
+// ═══════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════
+loadLessons();
+</script>
+</body>
+</html>
