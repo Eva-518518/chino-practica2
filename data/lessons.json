@@ -1,0 +1,77 @@
+[
+  {
+    "id": "l19",
+    "number": 19,
+    "title": "可以试试吗",
+    "subtitle": "¿Puedo probármela?",
+    "hsk": 2,
+    "topic": "Compras / 购物",
+    "dialogues": [
+      {
+        "id": "d1",
+        "title": "可以试试吗",
+        "titleEs": "¿Puedo probármela?",
+        "lines": [
+          { "who": "玛丽", "role": "student", "py": "Wǒ kànkan yǔróngfú.", "zh": "我看看羽绒服。", "es": "Quiero ver las chamarras de plumón." },
+          { "who": "售货员", "role": "shop", "py": "Nǐ kànkan zhè jiàn zěnmeyàng? Yòu hǎo yòu piányi.", "zh": "你看看这件怎么样？又好又便宜。", "es": "¿Qué te parece esta? Es bonita y además barata." },
+          { "who": "玛丽", "role": "student", "py": "Zhè jiàn yǒu yīdiǎnr cháng. Yǒu duǎn yīdiǎnr de ma?", "zh": "这件有一点儿长。有短一点儿的吗？", "es": "Esta queda un poco larga. ¿Tienen una más corta?" },
+          { "who": "售货员", "role": "shop", "py": "Nǐ yào shēn yánsè de háishi yào qiǎn yánsè de?", "zh": "你要深颜色的还是要浅颜色的？", "es": "¿Quieres color oscuro o claro?" },
+          { "who": "玛丽", "role": "student", "py": "Qiǎn yánsè de. Wǒ shìshi kěyǐ ma?", "zh": "浅颜色的。我试试可以吗？", "es": "Color claro. ¿Puedo probármela?" },
+          { "who": "售货员", "role": "shop", "py": "Dāngrán kěyǐ.", "zh": "当然可以。", "es": "Por supuesto." },
+          { "who": "玛丽", "role": "student", "py": "Zhè jiàn tài féi le, yǒu méiyǒu shòu yīdiǎnr de?", "zh": "这件太肥了，有没有瘦一点儿的？", "es": "Esta queda muy holgada, ¿tienen una más ajustada?" },
+          { "who": "售货员", "role": "shop", "py": "Nǐ zài shìshi zhè yī jiàn.", "zh": "你再试试这一件。", "es": "Pruébate esta otra." },
+          { "who": "玛丽", "role": "student", "py": "Zhè jiàn bú dà bù xiǎo, zhèng héshì, yánsè yě hěn hǎokàn.", "zh": "这件不大不小，正合适，颜色也很好看。", "es": "Esta queda perfecta, y el color es muy bonito." }
+        ]
+      },
+      {
+        "id": "d2",
+        "title": "便宜一点儿吧",
+        "titleEs": "¡Bájele un poco!",
+        "lines": [
+          { "who": "玛丽", "role": "student", "py": "Zhè zhǒng yǔróngfú zěnme mài?", "zh": "这种羽绒服怎么卖？", "es": "¿A cuánto venden esta chamarra?" },
+          { "who": "售货员", "role": "shop", "py": "Yī jiàn sìbǎi kuài.", "zh": "一件四百块。", "es": "Cuatrocientos yuanes cada una." },
+          { "who": "玛丽", "role": "student", "py": "Tài guì le. Piányi yīdiǎnr ba, èrbǎi zěnmeyàng?", "zh": "太贵了。便宜一点儿吧，二百怎么样？", "es": "¡Qué cara! Bájele un poco, ¿qué tal doscientos?" },
+          { "who": "售货员", "role": "shop", "py": "Èrbǎi tài shǎo le, bú mài. Kěyǐ dǎ bā zhé, nǐ gěi sānbǎi èr ba.", "zh": "二百太少了，不卖。可以打八折，你给三百二吧。", "es": "Doscientos es muy poco. Con 20% de descuento: 320." },
+          { "who": "玛丽", "role": "student", "py": "Sānbǎi xíng bu xíng?", "zh": "三百行不行？", "es": "¿Te parece bien con trescientos?" },
+          { "who": "售货员", "role": "shop", "py": "Gěi nǐ ba.", "zh": "给你吧。", "es": "¡Está bien, te la dejo!" }
+        ]
+      }
+    ],
+    "vocab": [
+      { "zh": "羽绒服", "py": "yǔróngfú", "es": "chamarra / abrigo de plumón", "pos": "名词", "note": "No confundir con 毛衣 (máoyī) = suéter" },
+      { "zh": "又…又…", "py": "yòu…yòu…", "es": "no solo… sino también…", "pos": "结构", "note": "Ej: 又好又便宜 = bonita y además barata" },
+      { "zh": "便宜", "py": "piányi", "es": "barato / económico", "pos": "形容词", "note": "\"p\" aspirada — más aire que en español" },
+      { "zh": "长", "py": "cháng", "es": "largo (en tamaño)", "pos": "形容词", "note": "No confundir con 长 (zhǎng) = crecer" },
+      { "zh": "一点儿", "py": "yīdiǎnr", "es": "un poco / un poquito", "pos": "数量", "note": "Después de adj = comparación. Antes = queja" },
+      { "zh": "短", "py": "duǎn", "es": "corto / bajo (en tamaño)", "pos": "形容词", "note": "Opuesto: 长 (cháng)" },
+      { "zh": "深", "py": "shēn", "es": "oscuro (color) / profundo", "pos": "形容词", "note": "深颜色 = color oscuro. Opuesto: 浅" },
+      { "zh": "浅", "py": "qiǎn", "es": "claro (color)", "pos": "形容词", "note": "浅颜色 = color claro. Opuesto: 深" },
+      { "zh": "试", "py": "shì", "es": "probar / intentar", "pos": "动词", "note": "试试 (V+V) = probarse, tono relajado" },
+      { "zh": "可以", "py": "kěyǐ", "es": "poder / se puede", "pos": "能愿动词", "note": "可以试试吗？= ¿Puedo probármelo?" },
+      { "zh": "当然", "py": "dāngrán", "es": "por supuesto / claro que sí", "pos": "副词", "note": "Respuesta afirmativa enfática" },
+      { "zh": "肥", "py": "féi", "es": "holgado / flojo (ropa)", "pos": "形容词", "note": "Para ropa. 胖 (pàng) = gordo (personas)" },
+      { "zh": "瘦", "py": "shòu", "es": "ajustado / ceñido (ropa)", "pos": "形容词", "note": "Para ropa. También = delgado (personas)" },
+      { "zh": "合适", "py": "héshì", "es": "apropiado / que queda bien", "pos": "形容词", "note": "正合适 = queda perfectamente" },
+      { "zh": "好看", "py": "hǎokàn", "es": "bonito / atractivo", "pos": "形容词", "note": "\"看\" aquí forma parte del adjetivo" },
+      { "zh": "种", "py": "zhǒng", "es": "tipo / clase (clasificador)", "pos": "量词", "note": "这种羽绒服 = este tipo de chamarra" },
+      { "zh": "打折", "py": "dǎ zhé", "es": "hacer descuento", "pos": "动词", "note": "打八折 = 20% descuento (paga el 80%)" }
+    ],
+    "grammar": [
+      { "title": "动词重叠 V+V", "titleEs": "Reduplicación verbal", "body": "Verbos duplicados (看看, 试试, 听听) expresan una acción breve o tentativa. Tono más relajado y casual. La 2ª sílaba se lee en tono neutro.", "examples": ["我看看羽绒服。(Déjame ver las chamarras.)", "你试试可以吗？(¿Puedes probártela?)"] },
+      { "title": "又…又…", "titleEs": "No solo… sino también…", "body": "Conecta dos adjetivos o verbos que ocurren simultáneamente.", "examples": ["又好又便宜 (bonita y además barata)", "又高又大 (alto y además grande)"] },
+      { "title": "太…了", "titleEs": "Demasiado… / ¡Qué…!", "body": "Expresa exceso (insatisfacción) o admiración según el adjetivo.", "examples": ["太贵了！(¡Demasiado caro!)", "太好了！(¡Qué bueno!)"] }
+    ],
+    "dictado": {
+      "blanks": [
+        { "id": "b1", "answer": "看看", "before": "玛丽：我", "after": "羽绒服。" },
+        { "id": "b2", "answer": "又", "before": "售货员：你看看这件怎么样？", "after": "好" },
+        { "id": "b3", "answer": "又", "before": "", "after": "便宜。" },
+        { "id": "b4", "answer": "长", "before": "玛丽：这件有一点儿", "after": "。有" },
+        { "id": "b5", "answer": "短一点儿", "before": "", "after": "的吗？" },
+        { "id": "b6", "answer": "当然", "before": "售货员：", "after": "可以。" }
+      ]
+    },
+    "roleplayContext": "Tienda de ropa en China. Venden 羽绒服 (chamarras de plumón). Precio: 400块. Negociable hasta 300. Usa gramática de la lección: V+V, 又…又…, 太…了, 可以, 打折.",
+    "pronunciationTips": "Dificultades para mexicanos: 便宜 piányi (p aspirada), 一点儿 yīdiǎnr (r retroflejo), 试试 shìshi (2ª sílaba tono neutro), 羽绒服 yǔróngfú (ü no existe en español)."
+  }
+]
